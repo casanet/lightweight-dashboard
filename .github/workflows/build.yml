@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   build:
+    environment: API_URL
     runs-on: ubuntu-latest
     strategy:
       matrix:
