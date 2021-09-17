@@ -1,7 +1,6 @@
 /** Get the environments */
 let environments = {
-  API_URL: "http://127.0.0.1:3000/API",
-  DASHBOARD_DOMAIN: "",
+  API_URL: "http://127.0.0.1:3000/API"
 };
 
 /** Flag to know if the 'power off' syncing */
@@ -10,26 +9,11 @@ let isSync = false;
 /** Flag to detect if there is an connection issue, the options 'connection' 'remote-connection' */
 let connectionIssue = '';
 
-function domainAlert() {
-  if (document.baseURI.includes(environments.DASHBOARD_DOMAIN)) {
-    return;
-  }
-
-  const result = confirm(
-    `The address of the service has changed and you will soon get off the air, please move to our new address!\n\n${environments.DASHBOARD_DOMAIN}\n\nPress 'OK' to move the new home`
-  );
-  if (!result) {
-    return;
-  }
-  window.location.href = `${environments.DASHBOARD_DOMAIN}/light-app/index.html`;
-};
-
 function fetchEnvironments() {
   const xmlhttp = new XMLHttpRequest();
   xmlhttp.onload = () => {
     if (xmlhttp.readyState === 4 && xmlhttp.status == 200) {
       environments = JSON.parse(xmlhttp.responseText);
-      domainAlert();
 
       // After we got the environment URL, start app data fetching and processing
       initApp();

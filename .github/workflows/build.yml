@@ -23,7 +23,6 @@ jobs:
         path: src
     - name: Bundle internal # The assets build for the local server, the api server is just ''
       env:
-        DASHBOARD_DOMAIN: ''
         API_URL: ''
       run: |
         node scripts/set-environment.js
