@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build:
-    environment: API_URL
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -17,9 +16,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Bundle www # The assets build for the public CDN
       env:
-        API_URL: '${{ secrets.API_URL }}'
+        API_URL_PROD: '${{ secrets.API_URL }}'
         API_URL_DEV: '${{ secrets.API_URL_DEV }}'
       run: |
+        if [[ $GITHUB_REF == 'main' ]]; then export API_URL=$API_URL_PROD ; else export API_URL=$API_URL_DEV; fi
         node scripts/set-environment.js
     - uses: actions/upload-artifact@v2
       with:
