@@ -18,6 +18,7 @@ jobs:
     - name: Bundle www # The assets build for the public CDN
       env:
         API_URL: '${{ secrets.API_URL }}'
+        API_URL_DEV: '${{ secrets.API_URL_DEV }}'
       run: |
         node scripts/set-environment.js
     - uses: actions/upload-artifact@v2
