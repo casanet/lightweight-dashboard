@@ -1,0 +1,33 @@
+name: casanet lightweight dashboard CI CD
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+    - uses: actions/checkout@v1 
+    - name: Install node
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Bundle www # The assets build for the public CDN
+      run: |
+        node scripts/set-environment.js
+    - uses: actions/upload-artifact@v2
+      with:
+        name: www
+        path: src
+    - name: Bundle internal # The assets build for the local server, the api server is just ''
+      env:
+        DASHBOARD_DOMAIN: ''
+        API_URL: ''
+      run: |
+        node scripts/set-environment.js
+    - uses: actions/upload-artifact@v2
+      with:
+        name: internal 
+        path: src
