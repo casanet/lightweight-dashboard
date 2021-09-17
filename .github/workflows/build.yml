@@ -19,7 +19,8 @@ jobs:
         API_URL_PROD: '${{ secrets.API_URL }}'
         API_URL_DEV: '${{ secrets.API_URL_DEV }}'
       run: |
-        if [[ $GITHUB_REF == 'main' ]]; then export API_URL=$API_URL_PROD ; else export API_URL=$API_URL_DEV; fi
+        export ON_BRANCH=${GITHUB_REF##*/}
+        if [[ $ON_BRANCH == 'main' ]]; then export API_URL=$API_URL_PROD ; else export API_URL=$API_URL_DEV; fi
         node scripts/set-environment.js
     - uses: actions/upload-artifact@v2
       with:
