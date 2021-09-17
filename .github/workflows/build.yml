@@ -1,4 +1,4 @@
-name: casanet lightweight dashboard CI CD
+name: Casanet lightweight dashboard CI CD
 
 on: [push]
 
