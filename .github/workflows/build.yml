@@ -9,9 +9,9 @@ jobs:
       matrix:
         node-version: [16.x]
     steps:
-    - uses: actions/checkout@v1 
+    - uses: actions/checkout@v3
     - name: Install node
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
     - name: Bundle www # The assets build for the public CDN
@@ -22,7 +22,7 @@ jobs:
         export ON_BRANCH=${GITHUB_REF##*/}
         if [[ $ON_BRANCH == 'main' ]]; then export API_URL=$API_URL_PROD ; else export API_URL=$API_URL_DEV; fi
         node scripts/set-environment.js
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: www
         path: src
@@ -31,7 +31,7 @@ jobs:
         API_URL: ''
       run: |
         node scripts/set-environment.js
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: internal 
         path: src
